@@ -61,16 +61,14 @@ const Index = () => {
     <div className="min-h-screen flex flex-col">
       {isCursorVisible && (
         <motion.div
-          className="fixed w-12 h-12 rounded-full bg-clockify-blue bg-opacity-20 mix-blend-difference pointer-events-none z-50 flex items-center justify-center"
+          className="fixed w-12 h-12 rounded-full bg-purple-500 bg-opacity-20 mix-blend-difference pointer-events-none z-50 flex items-center justify-center"
           animate={{ 
             x: cursorPosition.x - 24, 
             y: cursorPosition.y - 24,
-            scale: [1, 1.2, 1],
           }}
           transition={{ 
             x: { type: "spring", stiffness: 500, damping: 30 },
             y: { type: "spring", stiffness: 500, damping: 30 },
-            scale: { duration: 0.5, repeat: Infinity, repeatType: "reverse" }
           }}
         >
           <div className="w-3 h-3 bg-white rounded-full" />
@@ -80,7 +78,7 @@ const Index = () => {
       <Navbar />
       
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-clockify-blue to-clockify-lightBlue py-16 md:py-24 overflow-hidden">
+      <section className="bg-gradient-to-r from-purple-600 to-indigo-500 py-16 md:py-24 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="md:flex md:items-center md:justify-between">
             <motion.div 
@@ -101,7 +99,7 @@ const Index = () => {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.5, duration: 0.8 }}
-                  className="text-clockify-accent"
+                  className="text-yellow-300"
                 >
                   Your Time Game
                 </motion.span>
@@ -112,33 +110,23 @@ const Index = () => {
                 transition={{ delay: 0.8, duration: 0.8 }}
                 className="text-xl mb-8"
               >
-                The ultimate time management app designed for teens. Crush your goals with schedules that actually work.
+                The ultimate time management website created specifically for teens. Take control of your schedule, balance school and fun, and achieve your goals with ease.
               </motion.p>
-              <div className="space-x-4">
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+              <div className="flex space-x-4">
+                <Button 
+                  size="lg" 
+                  className="bg-white text-purple-700 hover:bg-gray-100 transition-all duration-300"
+                  onClick={handleGetStarted}
                 >
-                  <Button 
-                    size="lg" 
-                    className="bg-white text-clockify-blue hover:bg-gray-100 transition-all duration-300"
-                    onClick={handleGetStarted}
-                  >
-                    Get Started Now
-                  </Button>
-                </motion.div>
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                  Get Started Now
+                </Button>
+                <Button 
+                  size="lg" 
+                  variant="outline" 
+                  className="text-white border-white hover:bg-white/10 transition-all duration-300"
                 >
-                  <Button 
-                    size="lg" 
-                    variant="outline" 
-                    className="text-white border-white hover:bg-white/10 transition-all duration-300"
-                  >
-                    <Link to="/learn-more" className="text-white hover:text-white">Learn More</Link>
-                  </Button>
-                </motion.div>
+                  <Link to="/learn-more" className="text-white hover:text-white">Learn More</Link>
+                </Button>
               </div>
             </motion.div>
             
@@ -165,32 +153,29 @@ const Index = () => {
                 
                 <div className="absolute bottom-4 left-0 right-0 flex justify-center space-x-2">
                   {images.map((_, index) => (
-                    <motion.button
+                    <button
                       key={index}
                       className={`w-3 h-3 rounded-full ${
                         currentImage === index ? "bg-white" : "bg-white/40"
                       }`}
                       onClick={() => setCurrentImage(index)}
-                      whileHover={{ scale: 1.2 }}
                     />
                   ))}
                 </div>
                 
-                <motion.button
+                <button
                   className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black/30 p-2 rounded-full text-white"
                   onClick={prevImage}
-                  whileHover={{ scale: 1.1, backgroundColor: "rgba(0,0,0,0.5)" }}
                 >
                   <ChevronLeft size={20} />
-                </motion.button>
+                </button>
                 
-                <motion.button
+                <button
                   className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black/30 p-2 rounded-full text-white"
                   onClick={nextImage}
-                  whileHover={{ scale: 1.1, backgroundColor: "rgba(0,0,0,0.5)" }}
                 >
                   <ChevronRight size={20} />
-                </motion.button>
+                </button>
               </div>
             </motion.div>
           </div>
@@ -207,9 +192,9 @@ const Index = () => {
             transition={{ duration: 0.6 }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl font-bold text-gray-900">Why Clockify Rocks</h2>
+            <h2 className="text-3xl font-bold text-gray-900">Why Clockify Stands Out</h2>
             <p className="mt-4 text-xl text-gray-600 max-w-3xl mx-auto">
-              Created by teens, for teens. Get your life organized without all the boring stuff.
+              Designed with modern teens in mind. Streamlined, effective, and actually fun to use.
             </p>
           </motion.div>
           
@@ -219,15 +204,14 @@ const Index = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              whileHover={{ y: -8, boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1)" }}
-              className="bg-gradient-to-br from-clockify-lightGray to-white p-6 rounded-lg shadow-sm border border-gray-100"
+              className="bg-gradient-to-br from-gray-50 to-white p-6 rounded-lg shadow-sm border border-gray-100"
             >
-              <div className="w-12 h-12 bg-clockify-blue rounded-full flex items-center justify-center mb-4">
+              <div className="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center mb-4">
                 <Calendar className="h-6 w-6 text-white" />
               </div>
-              <h3 className="text-xl font-semibold mb-2">Ready-to-Go Schedules</h3>
+              <h3 className="text-xl font-semibold mb-2">Smart Schedule Templates</h3>
               <p className="text-gray-600">
-                Choose from templates designed for students. No more starting from scratch!
+                Pre-designed for high school and college students. Just pick and customize.
               </p>
             </motion.div>
             
@@ -236,15 +220,14 @@ const Index = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              whileHover={{ y: -8, boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1)" }}
-              className="bg-gradient-to-br from-clockify-lightGray to-white p-6 rounded-lg shadow-sm border border-gray-100"
+              className="bg-gradient-to-br from-gray-50 to-white p-6 rounded-lg shadow-sm border border-gray-100"
             >
-              <div className="w-12 h-12 bg-clockify-blue rounded-full flex items-center justify-center mb-4">
+              <div className="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center mb-4">
                 <List className="h-6 w-6 text-white" />
               </div>
-              <h3 className="text-xl font-semibold mb-2">Fully Customizable</h3>
+              <h3 className="text-xl font-semibold mb-2">Personalized Experience</h3>
               <p className="text-gray-600">
-                Make it yours! Adjust any schedule to fit your unique style and needs.
+                Adapt any schedule to match your personal style, priorities, and workflow.
               </p>
             </motion.div>
             
@@ -253,15 +236,14 @@ const Index = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.3 }}
-              whileHover={{ y: -8, boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1)" }}
-              className="bg-gradient-to-br from-clockify-lightGray to-white p-6 rounded-lg shadow-sm border border-gray-100"
+              className="bg-gradient-to-br from-gray-50 to-white p-6 rounded-lg shadow-sm border border-gray-100"
             >
-              <div className="w-12 h-12 bg-clockify-blue rounded-full flex items-center justify-center mb-4">
+              <div className="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center mb-4">
                 <Check className="h-6 w-6 text-white" />
               </div>
-              <h3 className="text-xl font-semibold mb-2">Proven Techniques</h3>
+              <h3 className="text-xl font-semibold mb-2">Research-Backed Methods</h3>
               <p className="text-gray-600">
-                Science-backed methods that actually work for teen life and school demands.
+                Using time management techniques proven to work with teen brains and busy schedules.
               </p>
             </motion.div>
           </div>
@@ -269,7 +251,7 @@ const Index = () => {
       </section>
       
       {/* Stats Section */}
-      <section className="py-16 bg-clockify-lightGray">
+      <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-4 gap-8 text-center">
             <motion.div 
@@ -277,9 +259,8 @@ const Index = () => {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4 }}
-              whileHover={{ scale: 1.05 }}
             >
-              <p className="text-4xl font-bold text-clockify-blue">3,500+</p>
+              <p className="text-4xl font-bold text-purple-600">3,500+</p>
               <p className="mt-2 text-lg text-gray-600">Teen Users</p>
             </motion.div>
             <motion.div 
@@ -287,9 +268,8 @@ const Index = () => {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: 0.1 }}
-              whileHover={{ scale: 1.05 }}
             >
-              <p className="text-4xl font-bold text-clockify-blue">80%</p>
+              <p className="text-4xl font-bold text-purple-600">80%</p>
               <p className="mt-2 text-lg text-gray-600">Report Better Grades</p>
             </motion.div>
             <motion.div 
@@ -297,9 +277,8 @@ const Index = () => {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: 0.2 }}
-              whileHover={{ scale: 1.05 }}
             >
-              <p className="text-4xl font-bold text-clockify-blue">65%</p>
+              <p className="text-4xl font-bold text-purple-600">65%</p>
               <p className="mt-2 text-lg text-gray-600">Less Procrastination</p>
             </motion.div>
             <motion.div 
@@ -307,9 +286,8 @@ const Index = () => {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: 0.3 }}
-              whileHover={{ scale: 1.05 }}
             >
-              <p className="text-4xl font-bold text-clockify-blue">50+</p>
+              <p className="text-4xl font-bold text-purple-600">50+</p>
               <p className="mt-2 text-lg text-gray-600">Schedule Templates</p>
             </motion.div>
           </div>
@@ -324,25 +302,19 @@ const Index = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            whileHover={{ scale: 1.02 }}
-            className="bg-gradient-to-r from-clockify-blue to-clockify-lightBlue rounded-xl shadow-lg p-8 md:p-12 text-center"
+            className="bg-gradient-to-r from-purple-600 to-indigo-500 rounded-xl shadow-lg p-8 md:p-12 text-center"
           >
-            <h2 className="text-3xl font-bold text-white mb-4">Ready to crush your goals?</h2>
+            <h2 className="text-3xl font-bold text-white mb-4">Ready to take control of your time?</h2>
             <p className="text-xl text-white/90 mb-8 max-w-3xl mx-auto">
-              Join thousands of teens who are leveling up their time management skills.
+              Join thousands of other teens who are mastering time management with Clockify.
             </p>
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+            <Button 
+              size="lg" 
+              className="bg-white text-purple-700 hover:bg-gray-100 transition-all duration-300"
+              onClick={handleGetStarted}
             >
-              <Button 
-                size="lg" 
-                className="bg-white text-clockify-blue hover:bg-gray-100 transition-all duration-300"
-                onClick={handleGetStarted}
-              >
-                Get Started Today
-              </Button>
-            </motion.div>
+              Get Started Today
+            </Button>
           </motion.div>
         </div>
       </section>

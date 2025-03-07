@@ -64,10 +64,10 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
 				clockify: {
-					blue: '#3498db',
-					darkBlue: '#2980b9',
-					lightBlue: '#5dade2',
-					accent: '#f39c12',
+					blue: '#8B5CF6',
+					darkBlue: '#6D28D9',
+					lightBlue: '#A78BFA',
+					accent: '#FBBF24',
 					lightGray: '#f8f9fa',
 					darkGray: '#343a40'
 				}
