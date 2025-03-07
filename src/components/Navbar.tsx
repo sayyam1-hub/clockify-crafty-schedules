@@ -28,10 +28,7 @@ const Navbar = () => {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link to="/" className="flex items-center">
-              <motion.div 
-                whileHover={{ rotate: 20 }}
-                transition={{ duration: 0.2 }}
-              >
+              <motion.div>
                 <Clock className="h-8 w-8 text-clockify-blue" />
               </motion.div>
               <motion.span 
@@ -47,43 +44,27 @@ const Navbar = () => {
           
           {/* Desktop Navigation */}
           <div className="hidden md:flex md:items-center md:space-x-4">
-            <motion.div whileHover={{ y: -2 }} transition={{ duration: 0.2 }}>
-              <Link to="/" className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-clockify-blue hover:bg-gray-50 transition-colors duration-200">
-                Home
-              </Link>
-            </motion.div>
-            <motion.div whileHover={{ y: -2 }} transition={{ duration: 0.2 }}>
-              <Link to="/tips" className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-clockify-blue hover:bg-gray-50 transition-colors duration-200">
-                Tips
-              </Link>
-            </motion.div>
-            <motion.div whileHover={{ y: -2 }} transition={{ duration: 0.2 }}>
-              <Link to="/schedules" className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-clockify-blue hover:bg-gray-50 transition-colors duration-200">
-                Schedules
-              </Link>
-            </motion.div>
-            <motion.div whileHover={{ y: -2 }} transition={{ duration: 0.2 }}>
-              <Link to="/reviews" className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-clockify-blue hover:bg-gray-50 transition-colors duration-200">
-                Reviews
-              </Link>
-            </motion.div>
-            <motion.div whileHover={{ y: -2 }} transition={{ duration: 0.2 }}>
-              <Link to="/faq" className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-clockify-blue hover:bg-gray-50 transition-colors duration-200">
-                FAQ
-              </Link>
-            </motion.div>
-            <motion.div 
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ duration: 0.2 }}
+            <Link to="/" className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 transition-colors duration-200">
+              Home
+            </Link>
+            <Link to="/tips" className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 transition-colors duration-200">
+              Tips
+            </Link>
+            <Link to="/schedules" className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 transition-colors duration-200">
+              Schedules
+            </Link>
+            <Link to="/reviews" className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 transition-colors duration-200">
+              Reviews
+            </Link>
+            <Link to="/faq" className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 transition-colors duration-200">
+              FAQ
+            </Link>
+            <Button 
+              className="ml-4 bg-clockify-blue hover:bg-clockify-darkBlue transition-colors duration-200"
+              onClick={handleGetStarted}
             >
-              <Button 
-                className="ml-4 bg-clockify-blue hover:bg-clockify-darkBlue transition-colors duration-200"
-                onClick={handleGetStarted}
-              >
-                Get Started
-              </Button>
-            </motion.div>
+              Get Started
+            </Button>
           </div>
           
           {/* Mobile menu button */}
@@ -120,19 +101,19 @@ const Navbar = () => {
           className="md:hidden"
         >
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            <Link to="/" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-clockify-blue hover:bg-gray-50 transition-colors duration-200">
+            <Link to="/" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 transition-colors duration-200">
               Home
             </Link>
-            <Link to="/tips" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-clockify-blue hover:bg-gray-50 transition-colors duration-200">
+            <Link to="/tips" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 transition-colors duration-200">
               Tips
             </Link>
-            <Link to="/schedules" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-clockify-blue hover:bg-gray-50 transition-colors duration-200">
+            <Link to="/schedules" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 transition-colors duration-200">
               Schedules
             </Link>
-            <Link to="/reviews" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-clockify-blue hover:bg-gray-50 transition-colors duration-200">
+            <Link to="/reviews" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 transition-colors duration-200">
               Reviews
             </Link>
-            <Link to="/faq" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-clockify-blue hover:bg-gray-50 transition-colors duration-200">
+            <Link to="/faq" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 transition-colors duration-200">
               FAQ
             </Link>
             <Button 

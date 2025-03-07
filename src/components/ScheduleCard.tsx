@@ -72,9 +72,8 @@ const ScheduleCard = ({ title, description, scheduleItems, category, difficulty 
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      whileHover={{ y: -5 }}
     >
-      <Card className="overflow-hidden transition-all duration-200 hover:shadow-md">
+      <Card className="overflow-hidden transition-all duration-200">
         <div className="flex items-center justify-between p-4 bg-clockify-lightGray">
           <div className="flex items-center gap-2">
             <div className={`h-3 w-3 rounded-full ${getDifficultyColor()}`}></div>
@@ -149,7 +148,7 @@ const ScheduleCard = ({ title, description, scheduleItems, category, difficulty 
           <Button 
             variant="ghost" 
             size="sm" 
-            className="text-clockify-blue hover:text-clockify-darkBlue"
+            className="text-clockify-blue"
             onClick={handleUseSchedule}
           >
             Use This Schedule

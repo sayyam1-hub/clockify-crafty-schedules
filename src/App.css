@@ -17,10 +17,9 @@
   will-change: filter;
   transition: filter 300ms;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em rgba(139, 92, 246, 0.7));
-}
-.logo.react:hover {
+
+/* Removed the hover styles for logos */
+.logo.react {
   filter: drop-shadow(0 0 2em rgba(139, 92, 246, 0.7));
 }
 

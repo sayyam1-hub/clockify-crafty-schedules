@@ -10,7 +10,7 @@ interface TipCardProps {
 
 const TipCard = ({ title, description, icon, color = "bg-clockify-blue" }: TipCardProps) => {
   return (
-    <Card className="overflow-hidden transition-all duration-200 hover:shadow-md">
+    <Card className="overflow-hidden">
       <div className={`h-2 ${color}`}></div>
       <CardHeader>
         <div className="flex items-center gap-2">
