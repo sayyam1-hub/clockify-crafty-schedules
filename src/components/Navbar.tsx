@@ -1,54 +1,96 @@
 
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const handleGetStarted = () => {
+    navigate("/schedules");
+  };
+
   return (
-    <nav className="bg-white shadow-sm sticky top-0 z-50">
+    <motion.nav 
+      initial={{ y: -20, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.4 }}
+      className="bg-white shadow-sm sticky top-0 z-50"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link to="/" className="flex items-center">
-              <Clock className="h-8 w-8 text-clockify-blue" />
-              <span className="ml-2 text-xl font-bold text-clockify-darkBlue">Clockify</span>
+              <motion.div 
+                whileHover={{ rotate: 20 }}
+                transition={{ duration: 0.2 }}
+              >
+                <Clock className="h-8 w-8 text-clockify-blue" />
+              </motion.div>
+              <motion.span 
+                initial={{ opacity: 0, x: -5 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.1, duration: 0.3 }}
+                className="ml-2 text-xl font-bold text-clockify-darkBlue"
+              >
+                Clockify
+              </motion.span>
             </Link>
           </div>
           
           {/* Desktop Navigation */}
           <div className="hidden md:flex md:items-center md:space-x-4">
-            <Link to="/" className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-clockify-blue hover:bg-gray-50">
-              Home
-            </Link>
-            <Link to="/tips" className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-clockify-blue hover:bg-gray-50">
-              Tips
-            </Link>
-            <Link to="/schedules" className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-clockify-blue hover:bg-gray-50">
-              Schedules
-            </Link>
-            <Link to="/reviews" className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-clockify-blue hover:bg-gray-50">
-              Reviews
-            </Link>
-            <Link to="/faq" className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-clockify-blue hover:bg-gray-50">
-              FAQ
-            </Link>
-            <Button className="ml-4 bg-clockify-blue hover:bg-clockify-darkBlue">
-              Get Started
-            </Button>
+            <motion.div whileHover={{ y: -2 }} transition={{ duration: 0.2 }}>
+              <Link to="/" className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-clockify-blue hover:bg-gray-50 transition-colors duration-200">
+                Home
+              </Link>
+            </motion.div>
+            <motion.div whileHover={{ y: -2 }} transition={{ duration: 0.2 }}>
+              <Link to="/tips" className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-clockify-blue hover:bg-gray-50 transition-colors duration-200">
+                Tips
+              </Link>
+            </motion.div>
+            <motion.div whileHover={{ y: -2 }} transition={{ duration: 0.2 }}>
+              <Link to="/schedules" className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-clockify-blue hover:bg-gray-50 transition-colors duration-200">
+                Schedules
+              </Link>
+            </motion.div>
+            <motion.div whileHover={{ y: -2 }} transition={{ duration: 0.2 }}>
+              <Link to="/reviews" className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-clockify-blue hover:bg-gray-50 transition-colors duration-200">
+                Reviews
+              </Link>
+            </motion.div>
+            <motion.div whileHover={{ y: -2 }} transition={{ duration: 0.2 }}>
+              <Link to="/faq" className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-clockify-blue hover:bg-gray-50 transition-colors duration-200">
+                FAQ
+              </Link>
+            </motion.div>
+            <motion.div 
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ duration: 0.2 }}
+            >
+              <Button 
+                className="ml-4 bg-clockify-blue hover:bg-clockify-darkBlue transition-colors duration-200"
+                onClick={handleGetStarted}
+              >
+                Get Started
+              </Button>
+            </motion.div>
           </div>
           
           {/* Mobile menu button */}
           <div className="flex md:hidden items-center">
             <button
               onClick={toggleMenu}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none"
+              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none transition-colors duration-200"
               aria-expanded="false"
             >
               <span className="sr-only">Open main menu</span>
@@ -70,30 +112,39 @@ const Navbar = () => {
 
       {/* Mobile menu, show/hide based on menu state */}
       {isMenuOpen && (
-        <div className="md:hidden">
+        <motion.div 
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: "auto" }}
+          exit={{ opacity: 0, height: 0 }}
+          transition={{ duration: 0.3 }}
+          className="md:hidden"
+        >
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            <Link to="/" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-clockify-blue hover:bg-gray-50">
+            <Link to="/" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-clockify-blue hover:bg-gray-50 transition-colors duration-200">
               Home
             </Link>
-            <Link to="/tips" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-clockify-blue hover:bg-gray-50">
+            <Link to="/tips" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-clockify-blue hover:bg-gray-50 transition-colors duration-200">
               Tips
             </Link>
-            <Link to="/schedules" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-clockify-blue hover:bg-gray-50">
+            <Link to="/schedules" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-clockify-blue hover:bg-gray-50 transition-colors duration-200">
               Schedules
             </Link>
-            <Link to="/reviews" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-clockify-blue hover:bg-gray-50">
+            <Link to="/reviews" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-clockify-blue hover:bg-gray-50 transition-colors duration-200">
               Reviews
             </Link>
-            <Link to="/faq" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-clockify-blue hover:bg-gray-50">
+            <Link to="/faq" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-clockify-blue hover:bg-gray-50 transition-colors duration-200">
               FAQ
             </Link>
-            <Button className="w-full mt-4 bg-clockify-blue hover:bg-clockify-darkBlue">
+            <Button 
+              className="w-full mt-4 bg-clockify-blue hover:bg-clockify-darkBlue transition-colors duration-200"
+              onClick={handleGetStarted}
+            >
               Get Started
             </Button>
           </div>
-        </div>
+        </motion.div>
       )}
-    </nav>
+    </motion.nav>
   );
 };
 
