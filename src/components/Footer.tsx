@@ -76,7 +76,6 @@ const Footer = () => {
         </div>
         <div className="mt-8 border-t border-gray-600 pt-8 flex justify-between items-center">
           <p className="text-sm text-gray-300">
-            © {new Date().getFullYear()}
           </p>
           <p className="text-sm text-gray-300">
             Designed for teenagers 13-18
