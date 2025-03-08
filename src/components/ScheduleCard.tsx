@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { Calendar, Clock } from "lucide-react";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { toast } from "sonner";
-import { motion } from "framer-motion";
 
 export interface ScheduleItem {
   time: string;
@@ -68,12 +67,8 @@ const ScheduleCard = ({ title, description, scheduleItems, category, difficulty 
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4 }}
-    >
-      <Card className="overflow-hidden transition-all duration-200">
+    <div>
+      <Card className="overflow-hidden">
         <div className="flex items-center justify-between p-4 bg-clockify-lightGray">
           <div className="flex items-center gap-2">
             <div className={`h-3 w-3 rounded-full ${getDifficultyColor()}`}></div>
@@ -121,17 +116,14 @@ const ScheduleCard = ({ title, description, scheduleItems, category, difficulty 
                   <div>
                     <div className="space-y-4">
                       {displayedSchedule.map((item, index) => (
-                        <motion.div 
+                        <div 
                           key={index} 
-                          initial={{ x: -10, opacity: 0 }}
-                          animate={{ x: 0, opacity: 1 }}
-                          transition={{ delay: index * 0.05 }}
                           className="flex items-start gap-2 py-2 border-b last:border-0"
                         >
                           <Clock className="h-4 w-4 text-clockify-blue mt-1" />
                           <span className="font-medium min-w-[80px]">{item.time}</span>
                           <span>{item.activity}</span>
-                        </motion.div>
+                        </div>
                       ))}
                     </div>
                     <Button className="w-full mt-4" onClick={() => setIsEditing(true)}>
@@ -155,7 +147,7 @@ const ScheduleCard = ({ title, description, scheduleItems, category, difficulty 
           </Button>
         </CardFooter>
       </Card>
-    </motion.div>
+    </div>
   );
 };
 

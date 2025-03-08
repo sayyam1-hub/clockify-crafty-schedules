@@ -3,7 +3,6 @@ import { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -20,21 +19,12 @@ const Navbar = () => {
   };
 
   const handleNavigation = (path: string) => {
-    if (location.pathname === path) {
-      window.scrollTo(0, 0);
-    } else {
-      navigate(path);
-      window.scrollTo(0, 0);
-    }
+    navigate(path);
+    window.scrollTo(0, 0);
   };
 
   return (
-    <motion.nav 
-      initial={{ y: -20, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.4 }}
-      className="bg-white shadow-sm sticky top-0 z-50"
-    >
+    <nav className="bg-white shadow-sm sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
@@ -42,17 +32,10 @@ const Navbar = () => {
               onClick={() => handleNavigation("/")} 
               className="flex items-center cursor-pointer"
             >
-              <motion.div>
-                <Clock className="h-8 w-8 text-clockify-blue" />
-              </motion.div>
-              <motion.span 
-                initial={{ opacity: 0, x: -5 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.1, duration: 0.3 }}
-                className="ml-2 text-xl font-bold text-clockify-darkBlue"
-              >
+              <Clock className="h-8 w-8 text-clockify-blue" />
+              <span className="ml-2 text-xl font-bold text-clockify-darkBlue">
                 Clockify
-              </motion.span>
+              </span>
             </div>
           </div>
           
@@ -100,7 +83,7 @@ const Navbar = () => {
           <div className="flex md:hidden items-center">
             <button
               onClick={toggleMenu}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500"
+              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400"
               aria-expanded="false"
             >
               <span className="sr-only">Open main menu</span>
@@ -122,13 +105,7 @@ const Navbar = () => {
 
       {/* Mobile menu */}
       {isMenuOpen && (
-        <motion.div 
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: "auto" }}
-          exit={{ opacity: 0, height: 0 }}
-          transition={{ duration: 0.3 }}
-          className="md:hidden"
-        >
+        <div className="md:hidden">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             <button 
               onClick={() => handleNavigation("/")} 
@@ -167,9 +144,9 @@ const Navbar = () => {
               Get Started
             </Button>
           </div>
-        </motion.div>
+        </div>
       )}
-    </motion.nav>
+    </nav>
   );
 };
 
