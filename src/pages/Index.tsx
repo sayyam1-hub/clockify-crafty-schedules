@@ -1,5 +1,4 @@
 
-import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Calendar, Clock, List, Check, ChevronLeft, ChevronRight } from "lucide-react";
 import Navbar from "@/components/Navbar";
@@ -8,10 +7,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
+// Updated slider images
 const images = [
-  "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800&q=80",
-  "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=800&q=80",
-  "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=800&q=80",
+  "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?auto=format&fit=crop&w=800&q=80",
+  "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=800&q=80", 
+  "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80",
   "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=800&q=80"
 ];
 
@@ -23,6 +23,12 @@ const Index = () => {
 
   const handleGetStarted = () => {
     navigate("/schedules");
+    window.scrollTo(0, 0);
+  };
+
+  const handleLearnMore = () => {
+    navigate("/learn-more");
+    window.scrollTo(0, 0);
   };
 
   useEffect(() => {
@@ -110,12 +116,12 @@ const Index = () => {
                 transition={{ delay: 0.8, duration: 0.8 }}
                 className="text-xl mb-8"
               >
-                The ultimate time management website created specifically for teens. Take control of your schedule, balance school and fun, and achieve your goals with ease.
+                The ultimate time management website created specifically for teens. Take control of your schedule, balance school and fun, and crush your goals with our easy-to-use tools.
               </motion.p>
-              <div className="flex space-x-4">
+              <div className="flex flex-wrap gap-4">
                 <Button 
                   size="lg" 
-                  className="bg-white text-purple-700 hover:bg-gray-100 transition-all duration-300"
+                  className="bg-white text-purple-700"
                   onClick={handleGetStarted}
                 >
                   Get Started Now
@@ -123,9 +129,10 @@ const Index = () => {
                 <Button 
                   size="lg" 
                   variant="outline" 
-                  className="text-white border-white hover:bg-white/10 transition-all duration-300"
+                  className="bg-transparent text-white border-white"
+                  onClick={handleLearnMore}
                 >
-                  <Link to="/learn-more" className="text-white hover:text-white">Learn More</Link>
+                  Learn More
                 </Button>
               </div>
             </motion.div>
@@ -310,7 +317,7 @@ const Index = () => {
             </p>
             <Button 
               size="lg" 
-              className="bg-white text-purple-700 hover:bg-gray-100 transition-all duration-300"
+              className="bg-white text-purple-700"
               onClick={handleGetStarted}
             >
               Get Started Today

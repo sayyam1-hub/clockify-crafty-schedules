@@ -18,7 +18,7 @@
   transition: filter 300ms;
 }
 
-/* Removed the hover styles for logos */
+/* Completely removed all hover styles */
 .logo.react {
   filter: drop-shadow(0 0 2em rgba(139, 92, 246, 0.7));
 }
@@ -51,4 +51,14 @@
   * {
     cursor: auto !important;
   }
+}
+
+/* Remove all transition/hover effects globally */
+a, button, .link, [role="button"] {
+  transition: none !important;
+}
+
+a:hover, button:hover, .link:hover, [role="button"]:hover {
+  transform: none !important;
+  scale: none !important;
 }
