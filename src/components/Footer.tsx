@@ -42,9 +42,6 @@ const Footer = () => {
             <h3 className="text-sm font-semibold uppercase tracking-wider">Resources</h3>
             <ul className="mt-4 space-y-2">
               <li>
-                <a href="#" className="text-gray-300 hover:text-white">Blog</a>
-              </li>
-              <li>
                 <a href="#" className="text-gray-300 hover:text-white">Support</a>
               </li>
               <li>
@@ -67,9 +64,6 @@ const Footer = () => {
               </li>
               <li>
                 <a href="#" className="text-gray-300 hover:text-white">Facebook</a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-300 hover:text-white">TikTok</a>
               </li>
             </ul>
           </div>

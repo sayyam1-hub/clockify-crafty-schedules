@@ -3,8 +3,18 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import TipCard from "@/components/TipCard";
 import { Clock, Calendar, List, Check, Timer } from "lucide-react";
+import { useEffect, useState } from "react";
 
 const Tips = () => {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    // Set isLoaded to true after a short delay to trigger animations
+    setTimeout(() => {
+      setIsLoaded(true);
+    }, 300);
+  }, []);
+
   const timeManagementTips = [
     {
       title: "The Pomodoro Technique",
@@ -68,7 +78,7 @@ const Tips = () => {
       
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-clockify-blue to-clockify-lightBlue py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
+        <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white ${isLoaded ? 'fade-in' : 'opacity-0'}`}>
           <h1 className="text-3xl md:text-4xl font-bold mb-4">
             Time Management Tips for Teens
           </h1>
@@ -83,13 +93,18 @@ const Tips = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {timeManagementTips.map((tip, index) => (
-              <TipCard 
-                key={index}
-                title={tip.title}
-                description={tip.description}
-                icon={tip.icon}
-                color={tip.color}
-              />
+              <div 
+                key={index} 
+                className={`${isLoaded ? 'scale-in' : 'opacity-0'}`} 
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <TipCard 
+                  title={tip.title}
+                  description={tip.description}
+                  icon={tip.icon}
+                  color={tip.color}
+                />
+              </div>
             ))}
           </div>
         </div>
@@ -97,7 +112,7 @@ const Tips = () => {
       
       {/* Additional Resources */}
       <section className="py-12 bg-clockify-lightGray">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${isLoaded ? 'slide-in-left' : 'opacity-0'}`} style={{ animationDelay: '0.5s' }}>
           <h2 className="text-2xl font-bold mb-8 text-center">Additional Resources</h2>
           <div className="bg-white rounded-lg shadow-sm p-6">
             <h3 className="text-xl font-semibold mb-4">Recommended Books</h3>

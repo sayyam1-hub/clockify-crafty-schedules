@@ -1,4 +1,5 @@
 
+import { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -16,6 +17,14 @@ interface Review {
 }
 
 const Reviews = () => {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoaded(true);
+    }, 300);
+  }, []);
+
   const reviews: Review[] = [
     {
       id: 1,
@@ -117,7 +126,7 @@ const Reviews = () => {
       
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-clockify-blue to-clockify-lightBlue py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
+        <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white ${isLoaded ? 'fade-in' : 'opacity-0'}`}>
           <h1 className="text-3xl md:text-4xl font-bold mb-4">
             What Our Users Say
           </h1>
@@ -137,29 +146,35 @@ const Reviews = () => {
       <section className="py-12 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {reviews.map((review) => (
-              <Card key={review.id} className="hover:shadow-md transition-shadow">
-                <CardContent className="pt-6">
-                  <div className="flex items-start">
-                    <Avatar className="h-12 w-12 border-2 border-clockify-blue">
-                      <AvatarFallback className="bg-clockify-lightBlue text-white">
-                        {review.avatar}
-                      </AvatarFallback>
-                    </Avatar>
-                    <div className="ml-4">
-                      <p className="font-semibold">{review.name}</p>
-                      <p className="text-sm text-gray-500">Age: {review.age}</p>
-                      <div className="flex mt-1">
-                        {renderStars(review.rating)}
+            {reviews.map((review, index) => (
+              <div 
+                key={review.id} 
+                className={`${isLoaded ? 'slide-in-left' : 'opacity-0'}`}
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <Card className="hover:shadow-md transition-shadow">
+                  <CardContent className="pt-6">
+                    <div className="flex items-start">
+                      <Avatar className="h-12 w-12 border-2 border-clockify-blue">
+                        <AvatarFallback className="bg-clockify-lightBlue text-white">
+                          {review.avatar}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="ml-4">
+                        <p className="font-semibold">{review.name}</p>
+                        <p className="text-sm text-gray-500">Age: {review.age}</p>
+                        <div className="flex mt-1">
+                          {renderStars(review.rating)}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="mt-4">
-                    <p className="text-gray-700">{review.comment}</p>
-                    <p className="mt-2 text-sm text-gray-500">{review.date}</p>
-                  </div>
-                </CardContent>
-              </Card>
+                    <div className="mt-4">
+                      <p className="text-gray-700">{review.comment}</p>
+                      <p className="mt-2 text-sm text-gray-500">{review.date}</p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
             ))}
           </div>
         </div>
@@ -167,10 +182,10 @@ const Reviews = () => {
       
       {/* Parent Testimonials */}
       <section className="py-12 bg-clockify-lightGray">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${isLoaded ? 'scale-in' : 'opacity-0'}`} style={{ animationDelay: '1s' }}>
           <h2 className="text-2xl font-bold mb-8 text-center">From Parents</h2>
           <div className="grid md:grid-cols-2 gap-6">
-            <Card className="hover:shadow-md transition-shadow">
+            <Card className="hover:shadow-md transition-shadow bounce">
               <CardContent className="pt-6">
                 <p className="italic text-gray-700">
                   "As a parent, I was looking for ways to help my daughter manage her time better without constantly nagging her. Clockify has been that solution. She's more independent and responsible now, and our relationship has improved without the constant stress over homework and deadlines."
@@ -187,7 +202,7 @@ const Reviews = () => {
               </CardContent>
             </Card>
             
-            <Card className="hover:shadow-md transition-shadow">
+            <Card className="hover:shadow-md transition-shadow bounce" style={{ animationDelay: '0.2s' }}>
               <CardContent className="pt-6">
                 <p className="italic text-gray-700">
                   "My son has always struggled with organization, especially since starting high school. The structured schedules from Clockify have given him a framework that works. His grades have improved, and he even has more free time because he's working more efficiently."

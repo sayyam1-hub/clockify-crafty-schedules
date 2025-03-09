@@ -2,8 +2,32 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { MessageCircle } from "lucide-react";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { useToast } from "@/hooks/use-toast";
 
 const FAQ = () => {
+  const [showChat, setShowChat] = useState(false);
+  const { toast } = useToast();
+  
+  const handleChatOpen = () => {
+    setShowChat(true);
+    toast({
+      title: "Live Chat Activated",
+      description: "A support agent will be with you shortly.",
+    });
+  };
+  
+  const handleChatClose = () => {
+    setShowChat(false);
+    toast({
+      title: "Live Chat Ended",
+      description: "Thank you for using our support service.",
+    });
+  };
+
   const faqs = [
     {
       question: "Who is Clockify designed for?",
@@ -52,7 +76,7 @@ const FAQ = () => {
       <Navbar />
       
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-clockify-blue to-clockify-lightBlue py-12">
+      <section className="bg-gradient-to-r from-clockify-blue to-clockify-lightBlue py-12 fade-in">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
           <h1 className="text-3xl md:text-4xl font-bold mb-4">
             Frequently Asked Questions
@@ -64,11 +88,11 @@ const FAQ = () => {
       </section>
       
       {/* FAQ Section */}
-      <section className="py-12 bg-white">
+      <section className="py-12 bg-white slide-in-left">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <Accordion type="single" collapsible className="w-full">
             {faqs.map((faq, index) => (
-              <AccordionItem key={index} value={`item-${index}`}>
+              <AccordionItem key={index} value={`item-${index}`} className="scale-in" style={{ animationDelay: `${index * 0.1}s` }}>
                 <AccordionTrigger className="text-left font-medium text-lg">
                   {faq.question}
                 </AccordionTrigger>
@@ -82,9 +106,9 @@ const FAQ = () => {
       </section>
       
       {/* Contact Section */}
-      <section className="py-12 bg-clockify-lightGray">
+      <section className="py-12 bg-clockify-lightGray scale-in">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-2xl font-bold mb-4">Still Have Questions?</h2>
+          <h2 className="text-2xl font-bold mb-4 bounce">Still Have Questions?</h2>
           <p className="text-lg text-gray-700 mb-6">
             We're here to help! Reach out to our support team for assistance.
           </p>
@@ -92,12 +116,51 @@ const FAQ = () => {
             <a href="mailto:support@clockify.com" className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-clockify-blue hover:bg-clockify-darkBlue">
               Email Support
             </a>
-            <a href="#" className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-clockify-blue bg-white hover:bg-gray-50">
+            <Button 
+              onClick={handleChatOpen} 
+              className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-clockify-blue bg-white hover:bg-gray-50"
+            >
+              <MessageCircle className="mr-2 h-5 w-5" />
               Live Chat
-            </a>
+            </Button>
           </div>
         </div>
       </section>
+      
+      {/* Live Chat Modal */}
+      {showChat && (
+        <div className="fixed bottom-4 right-4 w-80 z-50 scale-in">
+          <Card className="p-4 shadow-lg">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-semibold flex items-center">
+                <MessageCircle className="mr-2 h-5 w-5 text-clockify-blue" />
+                Live Support
+              </h3>
+              <Button variant="ghost" size="sm" onClick={handleChatClose}>×</Button>
+            </div>
+            <div className="h-60 bg-gray-50 rounded p-3 mb-4 overflow-auto">
+              <div className="flex mb-2">
+                <div className="bg-clockify-lightBlue text-white rounded-lg p-2 ml-auto">
+                  How can I help you today?
+                </div>
+              </div>
+              <div className="flex mb-2">
+                <div className="bg-gray-200 rounded-lg p-2">
+                  Welcome to Clockify Support! An agent will be with you shortly.
+                </div>
+              </div>
+            </div>
+            <div className="flex gap-2">
+              <input 
+                type="text" 
+                placeholder="Type your message..." 
+                className="flex-grow p-2 border rounded"
+              />
+              <Button>Send</Button>
+            </div>
+          </Card>
+        </div>
+      )}
       
       <Footer />
     </div>
