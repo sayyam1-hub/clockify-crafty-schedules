@@ -13,17 +13,26 @@ const Index = () => {
   useEffect(() => {
     // Set isLoaded to true after a short delay to trigger animations
     setTimeout(() => {
-      setIsLoaded(true);
+      setIsLoaded(true;
     }, 100);
+    
+    // Smooth scroll behavior for the page
+    document.documentElement.style.scrollBehavior = "smooth";
+    
+    return () => {
+      document.documentElement.style.scrollBehavior = "auto";
+    };
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col animate-fade-in">
       <Navbar />
-      <HeroSection />
-      <FeaturesSection />
-      <StatsSection />
-      <CTASection />
+      <main className="flex-grow">
+        <HeroSection />
+        <FeaturesSection />
+        <StatsSection />
+        <CTASection />
+      </main>
       <Footer />
     </div>
   );
