@@ -6,12 +6,11 @@ import Footer from "@/components/Footer";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-// Updated slider images
+// Updated slider images with the uploaded ones
 const images = [
-  "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?auto=format&fit=crop&w=800&q=80",
-  "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=800&q=80", 
-  "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80",
-  "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=800&q=80"
+  "/lovable-uploads/3a02ab49-704f-43fa-b105-5e32fe6b9f51.png",
+  "/lovable-uploads/409d0d71-ddc4-400e-913b-d6a50025d331.png",
+  "/lovable-uploads/9e78f86f-20a5-4e1e-ade9-d48959426687.png"
 ];
 
 const Index = () => {
@@ -19,12 +18,14 @@ const Index = () => {
   const [currentImage, setCurrentImage] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
 
-  const handleGetStarted = () => {
+  const handleGetStarted = (e) => {
+    e.preventDefault();
     navigate("/schedules");
     window.scrollTo(0, 0);
   };
 
-  const handleLearnMore = () => {
+  const handleLearnMore = (e) => {
+    e.preventDefault();
     navigate("/learn-more");
     window.scrollTo(0, 0);
   };
@@ -37,7 +38,7 @@ const Index = () => {
     // Set isLoaded to true after a short delay to trigger animations
     setTimeout(() => {
       setIsLoaded(true);
-    }, 300);
+    }, 100);
 
     return () => {
       clearInterval(interval);
