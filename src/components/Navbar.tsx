@@ -15,12 +15,10 @@ const Navbar = () => {
 
   const handleGetStarted = () => {
     navigate("/schedules");
-    window.scrollTo(0, 0);
   };
 
   const handleNavigation = (path: string) => {
     navigate(path);
-    window.scrollTo(0, 0);
   };
 
   return (
@@ -28,49 +26,49 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
-            <div 
-              onClick={() => handleNavigation("/")} 
+            <Link 
+              to="/" 
               className="flex items-center cursor-pointer"
             >
               <Clock className="h-8 w-8 text-clockify-blue" />
               <span className="ml-2 text-xl font-bold text-clockify-darkBlue">
                 Clockify
               </span>
-            </div>
+            </Link>
           </div>
           
           {/* Desktop Navigation */}
           <div className="hidden md:flex md:items-center md:space-x-4">
-            <button 
-              onClick={() => handleNavigation("/")} 
+            <Link 
+              to="/" 
               className="px-3 py-2 rounded-md text-sm font-medium text-gray-700"
             >
               Home
-            </button>
-            <button 
-              onClick={() => handleNavigation("/tips")} 
+            </Link>
+            <Link 
+              to="/tips" 
               className="px-3 py-2 rounded-md text-sm font-medium text-gray-700"
             >
               Tips
-            </button>
-            <button 
-              onClick={() => handleNavigation("/schedules")} 
+            </Link>
+            <Link 
+              to="/schedules" 
               className="px-3 py-2 rounded-md text-sm font-medium text-gray-700"
             >
               Schedules
-            </button>
-            <button 
-              onClick={() => handleNavigation("/reviews")} 
+            </Link>
+            <Link 
+              to="/reviews" 
               className="px-3 py-2 rounded-md text-sm font-medium text-gray-700"
             >
               Reviews
-            </button>
-            <button 
-              onClick={() => handleNavigation("/faq")} 
+            </Link>
+            <Link 
+              to="/faq" 
               className="px-3 py-2 rounded-md text-sm font-medium text-gray-700"
             >
               FAQ
-            </button>
+            </Link>
             <Button 
               className="ml-4 bg-clockify-blue"
               onClick={handleGetStarted}
@@ -107,36 +105,36 @@ const Navbar = () => {
       {isMenuOpen && (
         <div className="md:hidden">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            <button 
-              onClick={() => handleNavigation("/")} 
+            <Link 
+              to="/" 
               className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700"
             >
               Home
-            </button>
-            <button 
-              onClick={() => handleNavigation("/tips")} 
+            </Link>
+            <Link 
+              to="/tips" 
               className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700"
             >
               Tips
-            </button>
-            <button 
-              onClick={() => handleNavigation("/schedules")} 
+            </Link>
+            <Link 
+              to="/schedules" 
               className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700"
             >
               Schedules
-            </button>
-            <button 
-              onClick={() => handleNavigation("/reviews")} 
+            </Link>
+            <Link 
+              to="/reviews" 
               className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700"
             >
               Reviews
-            </button>
-            <button 
-              onClick={() => handleNavigation("/faq")} 
+            </Link>
+            <Link 
+              to="/faq" 
               className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700"
             >
               FAQ
-            </button>
+            </Link>
             <Button 
               className="w-full mt-4 bg-clockify-blue"
               onClick={handleGetStarted}

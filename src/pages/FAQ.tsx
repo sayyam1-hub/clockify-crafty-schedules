@@ -2,15 +2,40 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { MessageCircle } from "lucide-react";
-import { useState } from "react";
+import { MessageCircle, Send } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 
+interface ChatMessage {
+  text: string;
+  isUser: boolean;
+  timestamp: Date;
+}
+
 const FAQ = () => {
   const [showChat, setShowChat] = useState(false);
+  const [messages, setMessages] = useState<ChatMessage[]>([
+    { text: "Hi there! How can I help you today?", isUser: false, timestamp: new Date() }
+  ]);
+  const [inputValue, setInputValue] = useState("");
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
   const { toast } = useToast();
+  
+  // Set animation state
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoaded(true);
+    }, 100);
+    return () => clearTimeout(timer);
+  }, []);
+  
+  // Auto-scroll to bottom of chat
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
   
   const handleChatOpen = () => {
     setShowChat(true);
@@ -26,6 +51,54 @@ const FAQ = () => {
       title: "Live Chat Ended",
       description: "Thank you for using our support service.",
     });
+  };
+
+  // AI response generation
+  const getAIResponse = (userMessage: string) => {
+    const responses = [
+      "I understand your question. Let me help you with that!",
+      "That's a good question about time management.",
+      "I can definitely assist you with that issue.",
+      "Let me find the information you need about Clockify.",
+      "Thanks for reaching out! Here's what you need to know...",
+      "I'm checking our resources to give you the best answer.",
+      "Great question! Many teens ask about this topic.",
+      "I'd be happy to explain how Clockify can help with that.",
+      "Let me show you how to better manage your time for that activity.",
+      "Our schedules are designed to help with exactly that kind of situation."
+    ];
+    
+    return responses[Math.floor(Math.random() * responses.length)];
+  };
+
+  const handleMessageSend = () => {
+    if (!inputValue.trim()) return;
+    
+    // Add user message
+    const userMessage = {
+      text: inputValue,
+      isUser: true,
+      timestamp: new Date()
+    };
+    
+    setMessages(prev => [...prev, userMessage]);
+    setInputValue("");
+    
+    // Simulate AI typing with slight delay
+    setTimeout(() => {
+      const aiResponse = {
+        text: getAIResponse(inputValue),
+        isUser: false,
+        timestamp: new Date()
+      };
+      setMessages(prev => [...prev, aiResponse]);
+    }, 1000);
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleMessageSend();
+    }
   };
 
   const faqs = [
@@ -76,23 +149,28 @@ const FAQ = () => {
       <Navbar />
       
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-clockify-blue to-clockify-lightBlue py-12 fade-in">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
-          <h1 className="text-3xl md:text-4xl font-bold mb-4">
+      <section className="bg-gradient-to-r from-clockify-blue to-clockify-lightBlue py-12">
+        <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white ${isLoaded ? 'fade-in' : 'opacity-0'}`}>
+          <h1 className="text-3xl md:text-4xl font-bold mb-4 bounce">
             Frequently Asked Questions
           </h1>
-          <p className="text-xl max-w-3xl mx-auto">
+          <p className="text-xl max-w-3xl mx-auto slide-in-left">
             Find answers to common questions about Clockify and time management for teens.
           </p>
         </div>
       </section>
       
       {/* FAQ Section */}
-      <section className="py-12 bg-white slide-in-left">
+      <section className="py-12 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <Accordion type="single" collapsible className="w-full">
             {faqs.map((faq, index) => (
-              <AccordionItem key={index} value={`item-${index}`} className="scale-in" style={{ animationDelay: `${index * 0.1}s` }}>
+              <AccordionItem 
+                key={index} 
+                value={`item-${index}`} 
+                className={`${isLoaded ? 'scale-in' : 'opacity-0'}`}
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
                 <AccordionTrigger className="text-left font-medium text-lg">
                   {faq.question}
                 </AccordionTrigger>
@@ -106,19 +184,24 @@ const FAQ = () => {
       </section>
       
       {/* Contact Section */}
-      <section className="py-12 bg-clockify-lightGray scale-in">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <section className="py-12 bg-clockify-lightGray">
+        <div className={`max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center ${isLoaded ? 'scale-in' : 'opacity-0'}`}>
           <h2 className="text-2xl font-bold mb-4 bounce">Still Have Questions?</h2>
-          <p className="text-lg text-gray-700 mb-6">
+          <p className="text-lg text-gray-700 mb-6 slide-in-left">
             We're here to help! Reach out to our support team for assistance.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <a href="mailto:support@clockify.com" className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-clockify-blue hover:bg-clockify-darkBlue">
+            <a 
+              href="mailto:support@clockify.com" 
+              className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-clockify-blue hover:bg-clockify-darkBlue scale-in"
+              style={{ animationDelay: '0.3s' }}
+            >
               Email Support
             </a>
             <Button 
               onClick={handleChatOpen} 
-              className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-clockify-blue bg-white hover:bg-gray-50"
+              className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-clockify-blue bg-white hover:bg-gray-50 scale-in"
+              style={{ animationDelay: '0.4s' }}
             >
               <MessageCircle className="mr-2 h-5 w-5" />
               Live Chat
@@ -139,24 +222,33 @@ const FAQ = () => {
               <Button variant="ghost" size="sm" onClick={handleChatClose}>×</Button>
             </div>
             <div className="h-60 bg-gray-50 rounded p-3 mb-4 overflow-auto">
-              <div className="flex mb-2">
-                <div className="bg-clockify-lightBlue text-white rounded-lg p-2 ml-auto">
-                  How can I help you today?
+              {messages.map((message, index) => (
+                <div key={index} className={`flex mb-2 ${message.isUser ? 'justify-end' : 'justify-start'}`}>
+                  <div 
+                    className={`rounded-lg p-2 max-w-[80%] ${
+                      message.isUser 
+                        ? 'bg-clockify-blue text-white' 
+                        : 'bg-gray-200 text-gray-800'
+                    }`}
+                  >
+                    {message.text}
+                  </div>
                 </div>
-              </div>
-              <div className="flex mb-2">
-                <div className="bg-gray-200 rounded-lg p-2">
-                  Welcome to Clockify Support! An agent will be with you shortly.
-                </div>
-              </div>
+              ))}
+              <div ref={messagesEndRef} />
             </div>
             <div className="flex gap-2">
               <input 
                 type="text" 
                 placeholder="Type your message..." 
                 className="flex-grow p-2 border rounded"
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                onKeyPress={handleKeyPress}
               />
-              <Button>Send</Button>
+              <Button onClick={handleMessageSend}>
+                <Send className="h-4 w-4" />
+              </Button>
             </div>
           </Card>
         </div>

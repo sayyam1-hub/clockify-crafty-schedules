@@ -10,9 +10,11 @@ const Tips = () => {
 
   useEffect(() => {
     // Set isLoaded to true after a short delay to trigger animations
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       setIsLoaded(true);
-    }, 300);
+    }, 100);
+    
+    return () => clearTimeout(timer);
   }, []);
 
   const timeManagementTips = [
@@ -79,10 +81,10 @@ const Tips = () => {
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-clockify-blue to-clockify-lightBlue py-12">
         <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white ${isLoaded ? 'fade-in' : 'opacity-0'}`}>
-          <h1 className="text-3xl md:text-4xl font-bold mb-4">
+          <h1 className="text-3xl md:text-4xl font-bold mb-4 bounce">
             Time Management Tips for Teens
           </h1>
-          <p className="text-xl max-w-3xl mx-auto">
+          <p className="text-xl max-w-3xl mx-auto slide-in-left">
             Discover proven strategies to make the most of your time, boost productivity, and reduce stress.
           </p>
         </div>
@@ -95,7 +97,7 @@ const Tips = () => {
             {timeManagementTips.map((tip, index) => (
               <div 
                 key={index} 
-                className={`${isLoaded ? 'scale-in' : 'opacity-0'}`} 
+                className={`${isLoaded ? 'scale-in' : 'opacity-0'} hover-card`} 
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 <TipCard 
@@ -113,24 +115,24 @@ const Tips = () => {
       {/* Additional Resources */}
       <section className="py-12 bg-clockify-lightGray">
         <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${isLoaded ? 'slide-in-left' : 'opacity-0'}`} style={{ animationDelay: '0.5s' }}>
-          <h2 className="text-2xl font-bold mb-8 text-center">Additional Resources</h2>
-          <div className="bg-white rounded-lg shadow-sm p-6">
+          <h2 className="text-2xl font-bold mb-8 text-center bounce">Additional Resources</h2>
+          <div className="bg-white rounded-lg shadow-sm p-6 scale-in" style={{ animationDelay: '0.6s' }}>
             <h3 className="text-xl font-semibold mb-4">Recommended Books</h3>
             <ul className="list-disc pl-5 space-y-2">
-              <li>Atomic Habits by James Clear</li>
-              <li>Deep Work by Cal Newport</li>
-              <li>The 7 Habits of Highly Effective Teens by Sean Covey</li>
-              <li>Getting Things Done for Teens by David Allen</li>
+              <li className="fade-in" style={{ animationDelay: '0.7s' }}>Atomic Habits by James Clear</li>
+              <li className="fade-in" style={{ animationDelay: '0.8s' }}>Deep Work by Cal Newport</li>
+              <li className="fade-in" style={{ animationDelay: '0.9s' }}>The 7 Habits of Highly Effective Teens by Sean Covey</li>
+              <li className="fade-in" style={{ animationDelay: '1.0s' }}>Getting Things Done for Teens by David Allen</li>
             </ul>
           </div>
           
-          <div className="bg-white rounded-lg shadow-sm p-6 mt-6">
+          <div className="bg-white rounded-lg shadow-sm p-6 mt-6 scale-in" style={{ animationDelay: '0.8s' }}>
             <h3 className="text-xl font-semibold mb-4">Helpful Apps</h3>
             <ul className="list-disc pl-5 space-y-2">
-              <li>Forest - Stay focused and plant virtual trees</li>
-              <li>Notion - All-in-one workspace for notes and tasks</li>
-              <li>Todoist - Simple and powerful task manager</li>
-              <li>Focus@Will - Music scientifically optimized for focus</li>
+              <li className="fade-in" style={{ animationDelay: '0.9s' }}>Forest - Stay focused and plant virtual trees</li>
+              <li className="fade-in" style={{ animationDelay: '1.0s' }}>Notion - All-in-one workspace for notes and tasks</li>
+              <li className="fade-in" style={{ animationDelay: '1.1s' }}>Todoist - Simple and powerful task manager</li>
+              <li className="fade-in" style={{ animationDelay: '1.2s' }}>Focus@Will - Music scientifically optimized for focus</li>
             </ul>
           </div>
         </div>
