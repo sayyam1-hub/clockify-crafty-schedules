@@ -1,5 +1,5 @@
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -18,35 +18,11 @@ interface Review {
 
 const Reviews = () => {
   const [isLoaded, setIsLoaded] = useState(false);
-  const reviewCardsRef = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
-    // Set isLoaded immediately
-    setIsLoaded(true);
-    
-    // Setup intersection observer for spotlight effect on review cards
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry, index) => {
-          if (entry.isIntersecting) {
-            // Add 3D flip animation with staggered delay
-            setTimeout(() => {
-              entry.target.classList.add('review-card-visible');
-              entry.target.classList.add('animate-flip-in');
-            }, index * 150);
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-    
-    // Observe each review card
-    reviewCardsRef.current.forEach(card => {
-      if (card) observer.observe(card);
-    });
-    
-    return () => observer.disconnect();
+    setTimeout(() => {
+      setIsLoaded(true);
+    }, 300);
   }, []);
 
   const reviews: Review[] = [
@@ -148,21 +124,16 @@ const Reviews = () => {
     <div className="min-h-screen flex flex-col">
       <Navbar />
       
-      {/* Hero Section - Wave Animation */}
-      <section className="bg-gradient-to-r from-clockify-blue to-clockify-lightBlue py-12 relative overflow-hidden">
-        <div className="absolute bottom-0 left-0 w-full">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" className="w-full h-16 text-white fill-current">
-            <path d="M0,288L48,272C96,256,192,224,288,197.3C384,171,480,149,576,165.3C672,181,768,235,864,250.7C960,267,1056,245,1152,224C1248,203,1344,181,1392,170.7L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
-          </svg>
-        </div>
-        <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white relative z-10 ${isLoaded ? 'animate-wave-in' : 'opacity-0'}`}>
-          <h1 className="text-3xl md:text-4xl font-bold mb-4 animate-float">
+      {/* Hero Section */}
+      <section className="bg-gradient-to-r from-clockify-blue to-clockify-lightBlue py-12">
+        <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white ${isLoaded ? 'fade-in' : 'opacity-0'}`}>
+          <h1 className="text-3xl md:text-4xl font-bold mb-4">
             What Our Users Say
           </h1>
-          <p className="text-xl max-w-3xl mx-auto animate-float" style={{ animationDelay: '0.2s' }}>
+          <p className="text-xl max-w-3xl mx-auto">
             See how Clockify has helped teens just like you master time management and achieve their goals.
           </p>
-          <div className="flex items-center justify-center mt-6 animate-float" style={{ animationDelay: '0.4s' }}>
+          <div className="flex items-center justify-center mt-6">
             <div className="flex items-center">
               {renderStars(5)}
             </div>
@@ -171,17 +142,17 @@ const Reviews = () => {
         </div>
       </section>
       
-      {/* Reviews Section - 3D Flip Animation */}
-      <section className="py-12 bg-white relative z-10">
+      {/* Reviews Section */}
+      <section className="py-12 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {reviews.map((review, index) => (
               <div 
                 key={review.id} 
-                className="review-card perspective-1000"
-                ref={el => reviewCardsRef.current[index] = el}
+                className={`${isLoaded ? 'slide-in-left' : 'opacity-0'}`}
+                style={{ animationDelay: `${index * 0.1}s` }}
               >
-                <Card className="h-full hover:shadow-md transition-all duration-300 transform hover:-translate-y-1">
+                <Card className="hover:shadow-md transition-shadow">
                   <CardContent className="pt-6">
                     <div className="flex items-start">
                       <Avatar className="h-12 w-12 border-2 border-clockify-blue">
@@ -209,12 +180,12 @@ const Reviews = () => {
         </div>
       </section>
       
-      {/* Parent Testimonials - Wave Animation */}
-      <section className="py-12 bg-clockify-lightGray relative overflow-hidden">
-        <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${isLoaded ? 'animate-wave-in' : 'opacity-0'}`} style={{ animationDelay: '0.5s' }}>
+      {/* Parent Testimonials */}
+      <section className="py-12 bg-clockify-lightGray">
+        <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${isLoaded ? 'scale-in' : 'opacity-0'}`} style={{ animationDelay: '1s' }}>
           <h2 className="text-2xl font-bold mb-8 text-center">From Parents</h2>
           <div className="grid md:grid-cols-2 gap-6">
-            <Card className="hover:shadow-md transition-all duration-500 transform hover:scale-[1.02] perspective-1000 animate-wave-in" style={{ animationDelay: '0.7s' }}>
+            <Card className="hover:shadow-md transition-shadow bounce">
               <CardContent className="pt-6">
                 <p className="italic text-gray-700">
                   "As a parent, I was looking for ways to help my daughter manage her time better without constantly nagging her. Clockify has been that solution. She's more independent and responsible now, and our relationship has improved without the constant stress over homework and deadlines."
@@ -231,7 +202,7 @@ const Reviews = () => {
               </CardContent>
             </Card>
             
-            <Card className="hover:shadow-md transition-all duration-500 transform hover:scale-[1.02] perspective-1000 animate-wave-in" style={{ animationDelay: '0.9s' }}>
+            <Card className="hover:shadow-md transition-shadow bounce" style={{ animationDelay: '0.2s' }}>
               <CardContent className="pt-6">
                 <p className="italic text-gray-700">
                   "My son has always struggled with organization, especially since starting high school. The structured schedules from Clockify have given him a framework that works. His grades have improved, and he even has more free time because he's working more efficiently."

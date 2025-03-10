@@ -7,7 +7,6 @@ import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import '../animations.css';
 
 interface ChatMessage {
   text: string;
@@ -23,36 +22,14 @@ const FAQ = () => {
   const [inputValue, setInputValue] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  const accordionRefs = useRef<(HTMLDivElement | null)[]>([]);
   const { toast } = useToast();
   
   // Set animation state
   useEffect(() => {
-    setIsLoaded(true);
-    
-    // Setup intersection observer for accordion items
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry, index) => {
-          if (entry.isIntersecting) {
-            // Apply elastic bounce animation with staggered delay
-            setTimeout(() => {
-              entry.target.classList.add('animate-elastic-bounce');
-              entry.target.classList.remove('opacity-0');
-            }, index * 150);
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.1, rootMargin: '0px 0px -100px 0px' }
-    );
-    
-    // Observe each accordion item
-    accordionRefs.current.forEach(item => {
-      if (item) observer.observe(item);
-    });
-    
-    return () => observer.disconnect();
+    const timer = setTimeout(() => {
+      setIsLoaded(true);
+    }, 100);
+    return () => clearTimeout(timer);
   }, []);
   
   // Auto-scroll to bottom of chat
@@ -171,33 +148,28 @@ const FAQ = () => {
     <div className="min-h-screen flex flex-col">
       <Navbar />
       
-      {/* Hero Section - Fixed z-index */}
-      <section className="bg-gradient-to-r from-clockify-blue to-clockify-lightBlue py-12 relative overflow-hidden hero-section">
-        <div className="hero-content max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white relative z-10">
-          <h1 className={`text-3xl md:text-4xl font-bold mb-4 animate-float ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
+      {/* Hero Section */}
+      <section className="bg-gradient-to-r from-clockify-blue to-clockify-lightBlue py-12">
+        <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white ${isLoaded ? 'fade-in' : 'opacity-0'}`}>
+          <h1 className="text-3xl md:text-4xl font-bold mb-4 bounce">
             Frequently Asked Questions
           </h1>
-          <p className={`text-xl max-w-3xl mx-auto animate-float ${isLoaded ? 'opacity-100' : 'opacity-0'}`} style={{ animationDelay: '0.2s' }}>
+          <p className="text-xl max-w-3xl mx-auto slide-in-left">
             Find answers to common questions about Clockify and time management for teens.
           </p>
         </div>
-        <div className="absolute bottom-0 left-0 w-full z-0">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" className="w-full h-16 text-white fill-current">
-            <path d="M0,288L48,272C96,256,192,224,288,197.3C384,171,480,149,576,165.3C672,181,768,235,864,250.7C960,267,1056,245,1152,224C1248,203,1344,181,1392,170.7L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
-          </svg>
-        </div>
       </section>
       
-      {/* FAQ Section - Enhanced Animations */}
-      <section className="py-12 bg-white relative z-10">
+      {/* FAQ Section */}
+      <section className="py-12 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <Accordion type="single" collapsible className="w-full">
             {faqs.map((faq, index) => (
               <AccordionItem 
                 key={index} 
                 value={`item-${index}`} 
-                className="opacity-0"
-                ref={el => accordionRefs.current[index] = el}
+                className={`${isLoaded ? 'scale-in' : 'opacity-0'}`}
+                style={{ animationDelay: `${index * 0.1}s` }}
               >
                 <AccordionTrigger className="text-left font-medium text-lg">
                   {faq.question}
@@ -211,23 +183,25 @@ const FAQ = () => {
         </div>
       </section>
       
-      {/* Contact Section - Enhanced Animation */}
-      <section className="py-12 bg-clockify-lightGray relative overflow-hidden">
-        <div className={`max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 ${isLoaded ? 'animate-fade-up' : 'opacity-0'}`}>
-          <h2 className="text-2xl font-bold mb-4">Still Have Questions?</h2>
-          <p className="text-lg text-gray-700 mb-6">
+      {/* Contact Section */}
+      <section className="py-12 bg-clockify-lightGray">
+        <div className={`max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center ${isLoaded ? 'scale-in' : 'opacity-0'}`}>
+          <h2 className="text-2xl font-bold mb-4 bounce">Still Have Questions?</h2>
+          <p className="text-lg text-gray-700 mb-6 slide-in-left">
             We're here to help! Reach out to our support team for assistance.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <a 
               href="mailto:support@clockify.com" 
-              className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-clockify-blue hover:bg-clockify-darkBlue transform transition-transform hover:scale-105"
+              className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-clockify-blue hover:bg-clockify-darkBlue scale-in"
+              style={{ animationDelay: '0.3s' }}
             >
               Email Support
             </a>
             <Button 
               onClick={handleChatOpen} 
-              className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-clockify-blue bg-white hover:bg-gray-50 transform transition-transform hover:scale-105"
+              className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-clockify-blue bg-white hover:bg-gray-50 scale-in"
+              style={{ animationDelay: '0.4s' }}
             >
               <MessageCircle className="mr-2 h-5 w-5" />
               Live Chat
@@ -236,9 +210,9 @@ const FAQ = () => {
         </div>
       </section>
       
-      {/* Chat Modal - Enhanced Animation */}
+      {/* Live Chat Modal */}
       {showChat && (
-        <div className="fixed bottom-4 right-4 w-80 z-50 animate-message-pop">
+        <div className="fixed bottom-4 right-4 w-80 z-50 scale-in">
           <Card className="p-4 shadow-lg">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-lg font-semibold flex items-center">
@@ -251,12 +225,11 @@ const FAQ = () => {
               {messages.map((message, index) => (
                 <div key={index} className={`flex mb-2 ${message.isUser ? 'justify-end' : 'justify-start'}`}>
                   <div 
-                    className={`rounded-lg p-2 max-w-[80%] animate-message-pop ${
+                    className={`rounded-lg p-2 max-w-[80%] ${
                       message.isUser 
                         ? 'bg-clockify-blue text-white' 
                         : 'bg-gray-200 text-gray-800'
                     }`}
-                    style={{ animationDelay: `${index * 0.1}s` }}
                   >
                     {message.text}
                   </div>

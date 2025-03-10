@@ -1,5 +1,5 @@
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ScheduleCard, { ScheduleItem } from "@/components/ScheduleCard";
@@ -20,37 +20,13 @@ interface Schedule {
 const Schedules = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [isLoaded, setIsLoaded] = useState(false);
-  const [activeTab, setActiveTab] = useState("All");
-  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
   
   useEffect(() => {
-    // Set isLoaded to true immediately
-    setIsLoaded(true);
-    
-    // Setup intersection observer for card animations
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry, index) => {
-          if (entry.isIntersecting) {
-            // Apply a staggered elastic bounce animation
-            setTimeout(() => {
-              entry.target.classList.add('animate-elastic-bounce');
-              entry.target.classList.remove('opacity-0');
-            }, index * 100);
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-    
-    // Observe each card
-    cardsRef.current.forEach(card => {
-      if (card) observer.observe(card);
-    });
-    
-    return () => observer.disconnect();
-  }, [activeTab]); // Re-run when active tab changes
+    // Set isLoaded to true after a short delay to trigger animations
+    setTimeout(() => {
+      setIsLoaded(true);
+    }, 300);
+  }, []);
   
   const schedules: Schedule[] = [
     {
@@ -184,24 +160,13 @@ const Schedules = () => {
 
   const categories = ["All", ...new Set(schedules.map(schedule => schedule.category))];
 
-  const handleTabChange = (value: string) => {
-    setActiveTab(value);
-    // Reset card animations when tab changes
-    cardsRef.current.forEach(card => {
-      if (card) {
-        card.classList.remove('animate-elastic-bounce');
-        card.classList.add('opacity-0');
-      }
-    });
-  };
-
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
       
-      {/* Hero Section - Elastic Entrance */}
+      {/* Hero Section */}
       <section className="bg-gradient-to-r from-clockify-blue to-clockify-lightBlue py-12">
-        <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white transition-all duration-700 ${isLoaded ? 'animate-elastic-bounce' : 'opacity-0'}`}>
+        <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white ${isLoaded ? 'fade-in' : 'opacity-0'}`}>
           <h1 className="text-3xl md:text-4xl font-bold mb-4">
             Ready-Made Schedules
           </h1>
@@ -211,9 +176,9 @@ const Schedules = () => {
         </div>
       </section>
       
-      {/* Search Section - Slide Up Animation */}
+      {/* Search Section */}
       <section className="py-8 bg-white">
-        <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 transition-all duration-700 transform ${isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
+        <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${isLoaded ? 'slide-in-left' : 'opacity-0'}`} style={{ animationDelay: '0.2s' }}>
           <div className="flex flex-col md:flex-row gap-4">
             <div className="relative flex-grow">
               <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
@@ -224,17 +189,17 @@ const Schedules = () => {
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
-            <Button className="bg-clockify-blue hover:bg-clockify-darkBlue transform transition-transform hover:scale-105">
+            <Button className="bg-clockify-blue hover:bg-clockify-darkBlue bounce">
               Create New Schedule
             </Button>
           </div>
         </div>
       </section>
       
-      {/* Schedules Section - Elastic Bounce for Cards */}
+      {/* Schedules Section */}
       <section className="py-8 bg-clockify-lightGray flex-grow">
-        <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${isLoaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-500`}>
-          <Tabs defaultValue="All" onValueChange={handleTabChange}>
+        <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${isLoaded ? 'scale-in' : 'opacity-0'}`} style={{ animationDelay: '0.4s' }}>
+          <Tabs defaultValue="All">
             <TabsList className="mb-8">
               {categories.map((category) => (
                 <TabsTrigger key={category} value={category}>{category}</TabsTrigger>
@@ -249,8 +214,8 @@ const Schedules = () => {
                     .map((schedule, index) => (
                       <div 
                         key={schedule.id} 
-                        className="opacity-0"
-                        ref={el => cardsRef.current[index] = el}
+                        className={`${isLoaded ? 'scale-in' : 'opacity-0'}`} 
+                        style={{ animationDelay: `${0.5 + (index * 0.1)}s` }}
                       >
                         <ScheduleCard
                           title={schedule.title}

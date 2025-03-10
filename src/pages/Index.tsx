@@ -11,8 +11,10 @@ const Index = () => {
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    // Set isLoaded to true immediately to avoid delay
-    setIsLoaded(true);
+    // Set isLoaded to true after a short delay to trigger animations
+    setTimeout(() => {
+      setIsLoaded(true);
+    }, 100);
     
     // Smooth scroll behavior for the page
     document.documentElement.style.scrollBehavior = "smooth";
@@ -23,7 +25,7 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col animate-fade-in">
       <Navbar />
       <main className="flex-grow">
         <HeroSection />

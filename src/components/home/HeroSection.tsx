@@ -55,10 +55,10 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="bg-gradient-to-r from-purple-600 to-indigo-500 py-16 md:py-24 overflow-hidden hero-section">
+    <section className="bg-gradient-to-r from-purple-600 to-indigo-500 py-16 md:py-24 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="md:flex md:items-center md:justify-between">
-          <div className={`md:w-1/2 text-white transition-all duration-700 transform ${isLoaded ? 'translate-x-0 opacity-100' : '-translate-x-10 opacity-0'} hero-content`}>
+          <div className={`md:w-1/2 text-white transition-all duration-700 transform ${isLoaded ? 'translate-x-0 opacity-100' : '-translate-x-10 opacity-0'}`}>
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
               <span className="animate-pulse">Level Up</span>{" "}
               <span className="text-yellow-300 animate-pulse" style={{ animationDelay: "0.5s" }}>Your Time Game</span>

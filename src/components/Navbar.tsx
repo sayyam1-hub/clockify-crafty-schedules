@@ -12,24 +12,15 @@ const Navbar = () => {
   // Close menu when route changes
   useEffect(() => {
     setIsMenuOpen(false);
-    // Scroll to top when route changes
-    window.scrollTo(0, 0);
   }, [location.pathname]);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const handleGetStarted = (e: React.MouseEvent) => {
+  const handleGetStarted = (e) => {
     e.preventDefault();
     navigate("/schedules");
-    window.scrollTo(0, 0);
-  };
-
-  const handleNavigation = (path: string) => (e: React.MouseEvent) => {
-    e.preventDefault();
-    navigate(path);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -40,7 +31,6 @@ const Navbar = () => {
             <Link 
               to="/" 
               className="flex items-center cursor-pointer"
-              onClick={handleNavigation("/")}
             >
               <Clock className="h-8 w-8 text-clockify-blue" />
               <span className="ml-2 text-xl font-bold text-clockify-darkBlue">
@@ -54,35 +44,30 @@ const Navbar = () => {
             <Link 
               to="/" 
               className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-clockify-blue transition-colors"
-              onClick={handleNavigation("/")}
             >
               Home
             </Link>
             <Link 
               to="/tips" 
               className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-clockify-blue transition-colors"
-              onClick={handleNavigation("/tips")}
             >
               Tips
             </Link>
             <Link 
               to="/schedules" 
               className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-clockify-blue transition-colors"
-              onClick={handleNavigation("/schedules")}
             >
               Schedules
             </Link>
             <Link 
               to="/reviews" 
               className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-clockify-blue transition-colors"
-              onClick={handleNavigation("/reviews")}
             >
               Reviews
             </Link>
             <Link 
               to="/faq" 
               className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-clockify-blue transition-colors"
-              onClick={handleNavigation("/faq")}
             >
               FAQ
             </Link>
@@ -125,35 +110,30 @@ const Navbar = () => {
             <Link 
               to="/" 
               className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-clockify-blue transition-colors"
-              onClick={handleNavigation("/")}
             >
               Home
             </Link>
             <Link 
               to="/tips" 
               className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-clockify-blue transition-colors"
-              onClick={handleNavigation("/tips")}
             >
               Tips
             </Link>
             <Link 
               to="/schedules" 
               className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-clockify-blue transition-colors"
-              onClick={handleNavigation("/schedules")}
             >
               Schedules
             </Link>
             <Link 
               to="/reviews" 
               className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-clockify-blue transition-colors"
-              onClick={handleNavigation("/reviews")}
             >
               Reviews
             </Link>
             <Link 
               to="/faq" 
               className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-clockify-blue transition-colors"
-              onClick={handleNavigation("/faq")}
             >
               FAQ
             </Link>

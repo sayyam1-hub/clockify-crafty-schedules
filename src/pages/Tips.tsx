@@ -3,39 +3,18 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import TipCard from "@/components/TipCard";
 import { Clock, Calendar, List, Check, Timer } from "lucide-react";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 
 const Tips = () => {
   const [isLoaded, setIsLoaded] = useState(false);
-  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
-    // Set isLoaded to true immediately
-    setIsLoaded(true);
+    // Set isLoaded to true after a short delay to trigger animations
+    const timer = setTimeout(() => {
+      setIsLoaded(true);
+    }, 100);
     
-    // Setup intersection observer for each card
-    const observerOptions = {
-      root: null,
-      rootMargin: '0px',
-      threshold: 0.1
-    };
-    
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          // Add animation class when card is visible
-          entry.target.classList.add('animate-flip-in');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, observerOptions);
-    
-    // Observe each card
-    cardRefs.current.forEach(card => {
-      if (card) observer.observe(card);
-    });
-    
-    return () => observer.disconnect();
+    return () => clearTimeout(timer);
   }, []);
 
   const timeManagementTips = [
@@ -99,32 +78,27 @@ const Tips = () => {
     <div className="min-h-screen flex flex-col">
       <Navbar />
       
-      {/* Hero Section - 3D Flip Animation with proper z-index */}
-      <section className="bg-gradient-to-r from-clockify-blue to-clockify-lightBlue py-12 relative overflow-hidden z-0">
-        <div className="absolute bottom-0 left-0 w-full">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" className="w-full h-16 text-white fill-current">
-            <path d="M0,288L48,272C96,256,192,224,288,197.3C384,171,480,149,576,165.3C672,181,768,235,864,250.7C960,267,1056,245,1152,224C1248,203,1344,181,1392,170.7L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
-          </svg>
-        </div>
-        <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white relative z-10 ${isLoaded ? 'animate-flip-in' : 'opacity-0'}`}>
-          <h1 className="text-3xl md:text-4xl font-bold mb-4">
+      {/* Hero Section */}
+      <section className="bg-gradient-to-r from-clockify-blue to-clockify-lightBlue py-12">
+        <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white ${isLoaded ? 'fade-in' : 'opacity-0'}`}>
+          <h1 className="text-3xl md:text-4xl font-bold mb-4 bounce">
             Time Management Tips for Teens
           </h1>
-          <p className="text-xl max-w-3xl mx-auto">
+          <p className="text-xl max-w-3xl mx-auto slide-in-left">
             Discover proven strategies to make the most of your time, boost productivity, and reduce stress.
           </p>
         </div>
       </section>
       
-      {/* Tips Section - Staggered Flip Animation */}
-      <section className="py-12 bg-white z-10 relative">
+      {/* Tips Section */}
+      <section className="py-12 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {timeManagementTips.map((tip, index) => (
               <div 
                 key={index} 
-                ref={el => cardRefs.current[index] = el}
-                className="opacity-0 hover-card transform perspective-1000" 
+                className={`${isLoaded ? 'scale-in' : 'opacity-0'} hover-card`} 
+                style={{ animationDelay: `${index * 0.1}s` }}
               >
                 <TipCard 
                   title={tip.title}
@@ -139,26 +113,26 @@ const Tips = () => {
       </section>
       
       {/* Additional Resources */}
-      <section className="py-12 bg-clockify-lightGray relative z-10">
-        <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${isLoaded ? 'animate-slide-up' : 'opacity-0'}`}>
-          <h2 className="text-2xl font-bold mb-8 text-center">Additional Resources</h2>
-          <div className="bg-white rounded-lg shadow-sm p-6 transform transition-all duration-500 hover:scale-[1.02]">
+      <section className="py-12 bg-clockify-lightGray">
+        <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${isLoaded ? 'slide-in-left' : 'opacity-0'}`} style={{ animationDelay: '0.5s' }}>
+          <h2 className="text-2xl font-bold mb-8 text-center bounce">Additional Resources</h2>
+          <div className="bg-white rounded-lg shadow-sm p-6 scale-in" style={{ animationDelay: '0.6s' }}>
             <h3 className="text-xl font-semibold mb-4">Recommended Books</h3>
             <ul className="list-disc pl-5 space-y-2">
-              <li className="transform transition-all duration-500" style={{ transitionDelay: '100ms' }}>Atomic Habits by James Clear</li>
-              <li className="transform transition-all duration-500" style={{ transitionDelay: '200ms' }}>Deep Work by Cal Newport</li>
-              <li className="transform transition-all duration-500" style={{ transitionDelay: '300ms' }}>The 7 Habits of Highly Effective Teens by Sean Covey</li>
-              <li className="transform transition-all duration-500" style={{ transitionDelay: '400ms' }}>Getting Things Done for Teens by David Allen</li>
+              <li className="fade-in" style={{ animationDelay: '0.7s' }}>Atomic Habits by James Clear</li>
+              <li className="fade-in" style={{ animationDelay: '0.8s' }}>Deep Work by Cal Newport</li>
+              <li className="fade-in" style={{ animationDelay: '0.9s' }}>The 7 Habits of Highly Effective Teens by Sean Covey</li>
+              <li className="fade-in" style={{ animationDelay: '1.0s' }}>Getting Things Done for Teens by David Allen</li>
             </ul>
           </div>
           
-          <div className="bg-white rounded-lg shadow-sm p-6 mt-6 transform transition-all duration-500 hover:scale-[1.02]">
+          <div className="bg-white rounded-lg shadow-sm p-6 mt-6 scale-in" style={{ animationDelay: '0.8s' }}>
             <h3 className="text-xl font-semibold mb-4">Helpful Apps</h3>
             <ul className="list-disc pl-5 space-y-2">
-              <li className="transform transition-all duration-500" style={{ transitionDelay: '100ms' }}>Forest - Stay focused and plant virtual trees</li>
-              <li className="transform transition-all duration-500" style={{ transitionDelay: '200ms' }}>Notion - All-in-one workspace for notes and tasks</li>
-              <li className="transform transition-all duration-500" style={{ transitionDelay: '300ms' }}>Todoist - Simple and powerful task manager</li>
-              <li className="transform transition-all duration-500" style={{ transitionDelay: '400ms' }}>Focus@Will - Music scientifically optimized for focus</li>
+              <li className="fade-in" style={{ animationDelay: '0.9s' }}>Forest - Stay focused and plant virtual trees</li>
+              <li className="fade-in" style={{ animationDelay: '1.0s' }}>Notion - All-in-one workspace for notes and tasks</li>
+              <li className="fade-in" style={{ animationDelay: '1.1s' }}>Todoist - Simple and powerful task manager</li>
+              <li className="fade-in" style={{ animationDelay: '1.2s' }}>Focus@Will - Music scientifically optimized for focus</li>
             </ul>
           </div>
         </div>
