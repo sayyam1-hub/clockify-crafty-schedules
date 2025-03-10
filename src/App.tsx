@@ -26,7 +26,7 @@ const ScrollToTop = () => {
 
 // Page transition wrapper
 const PageTransition = ({ children }: { children: React.ReactNode }) => {
-  return <div className="page-transition-container">{children}</div>;
+  return <div className="page-transition">{children}</div>;
 };
 
 const queryClient = new QueryClient();

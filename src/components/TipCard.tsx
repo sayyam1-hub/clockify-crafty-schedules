@@ -6,11 +6,12 @@ interface TipCardProps {
   description: string;
   icon: React.ReactNode;
   color?: string;
+  className?: string;
 }
 
-const TipCard = ({ title, description, icon, color = "bg-clockify-blue" }: TipCardProps) => {
+const TipCard = ({ title, description, icon, color = "bg-clockify-blue", className = "" }: TipCardProps) => {
   return (
-    <Card className="overflow-hidden h-full transition-all duration-300 hover:shadow-lg">
+    <Card className={`overflow-hidden h-full transition-all duration-300 hover:shadow-lg ${className}`}>
       <div className={`h-2 ${color}`}></div>
       <CardHeader>
         <div className="flex items-center gap-2">

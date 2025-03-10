@@ -20,7 +20,7 @@ const Navbar = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const handleGetStarted = (e) => {
+  const handleGetStarted = (e: React.MouseEvent) => {
     e.preventDefault();
     navigate("/schedules");
     window.scrollTo(0, 0);
@@ -29,7 +29,7 @@ const Navbar = () => {
   const handleNavigation = (path: string) => (e: React.MouseEvent) => {
     e.preventDefault();
     navigate(path);
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (

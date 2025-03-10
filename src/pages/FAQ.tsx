@@ -7,6 +7,7 @@ import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
+import '../animations.css';
 
 interface ChatMessage {
   text: string;
@@ -170,24 +171,24 @@ const FAQ = () => {
     <div className="min-h-screen flex flex-col">
       <Navbar />
       
-      {/* Hero Section - Elastic Bounce Animation */}
-      <section className="bg-gradient-to-r from-clockify-blue to-clockify-lightBlue py-12 relative overflow-hidden">
-        <div className="absolute bottom-0 left-0 w-full">
+      {/* Hero Section - Fixed z-index */}
+      <section className="bg-gradient-to-r from-clockify-blue to-clockify-lightBlue py-12 relative overflow-hidden hero-section">
+        <div className="hero-content max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white relative z-10">
+          <h1 className={`text-3xl md:text-4xl font-bold mb-4 animate-float ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
+            Frequently Asked Questions
+          </h1>
+          <p className={`text-xl max-w-3xl mx-auto animate-float ${isLoaded ? 'opacity-100' : 'opacity-0'}`} style={{ animationDelay: '0.2s' }}>
+            Find answers to common questions about Clockify and time management for teens.
+          </p>
+        </div>
+        <div className="absolute bottom-0 left-0 w-full z-0">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" className="w-full h-16 text-white fill-current">
             <path d="M0,288L48,272C96,256,192,224,288,197.3C384,171,480,149,576,165.3C672,181,768,235,864,250.7C960,267,1056,245,1152,224C1248,203,1344,181,1392,170.7L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
           </svg>
         </div>
-        <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white relative z-10 ${isLoaded ? 'animate-elastic-bounce' : 'opacity-0'}`}>
-          <h1 className="text-3xl md:text-4xl font-bold mb-4 animate-float">
-            Frequently Asked Questions
-          </h1>
-          <p className="text-xl max-w-3xl mx-auto animate-float" style={{ animationDelay: '0.2s' }}>
-            Find answers to common questions about Clockify and time management for teens.
-          </p>
-        </div>
       </section>
       
-      {/* FAQ Section - Elastic Bounce Animation */}
+      {/* FAQ Section - Enhanced Animations */}
       <section className="py-12 bg-white relative z-10">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <Accordion type="single" collapsible className="w-full">
@@ -210,7 +211,7 @@ const FAQ = () => {
         </div>
       </section>
       
-      {/* Contact Section - Pulse Animation */}
+      {/* Contact Section - Enhanced Animation */}
       <section className="py-12 bg-clockify-lightGray relative overflow-hidden">
         <div className={`max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 ${isLoaded ? 'animate-fade-up' : 'opacity-0'}`}>
           <h2 className="text-2xl font-bold mb-4">Still Have Questions?</h2>
@@ -226,7 +227,7 @@ const FAQ = () => {
             </a>
             <Button 
               onClick={handleChatOpen} 
-              className="pulse inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-clockify-blue bg-white hover:bg-gray-50 transform transition-transform hover:scale-105"
+              className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-clockify-blue bg-white hover:bg-gray-50 transform transition-transform hover:scale-105"
             >
               <MessageCircle className="mr-2 h-5 w-5" />
               Live Chat
@@ -235,7 +236,7 @@ const FAQ = () => {
         </div>
       </section>
       
-      {/* Chat Modal - Pop Animation */}
+      {/* Chat Modal - Enhanced Animation */}
       {showChat && (
         <div className="fixed bottom-4 right-4 w-80 z-50 animate-message-pop">
           <Card className="p-4 shadow-lg">
@@ -272,7 +273,7 @@ const FAQ = () => {
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyPress={handleKeyPress}
               />
-              <Button onClick={handleMessageSend} className="hover-card">
+              <Button onClick={handleMessageSend}>
                 <Send className="h-4 w-4" />
               </Button>
             </div>
