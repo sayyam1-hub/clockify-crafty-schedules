@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -18,11 +18,31 @@ interface Review {
 
 const Reviews = () => {
   const [isLoaded, setIsLoaded] = useState(false);
+  const reviewCardsRef = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
-    setTimeout(() => {
-      setIsLoaded(true);
-    }, 300);
+    // Set isLoaded immediately
+    setIsLoaded(true);
+    
+    // Setup intersection observer for spotlight effect on review cards
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('review-card-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+    
+    // Observe each review card
+    reviewCardsRef.current.forEach(card => {
+      if (card) observer.observe(card);
+    });
+    
+    return () => observer.disconnect();
   }, []);
 
   const reviews: Review[] = [
@@ -124,9 +144,10 @@ const Reviews = () => {
     <div className="min-h-screen flex flex-col">
       <Navbar />
       
-      {/* Hero Section */}
-      <section className="bg-gradient-to-r from-clockify-blue to-clockify-lightBlue py-12">
-        <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white ${isLoaded ? 'fade-in' : 'opacity-0'}`}>
+      {/* Hero Section - Spotlight Effect */}
+      <section className="bg-gradient-to-r from-clockify-blue to-clockify-lightBlue py-12 relative overflow-hidden">
+        <div className="absolute inset-0 bg-spotlight opacity-20"></div>
+        <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white relative z-10 ${isLoaded ? 'animate-spotlight-reveal' : 'opacity-0'}`}>
           <h1 className="text-3xl md:text-4xl font-bold mb-4">
             What Our Users Say
           </h1>
@@ -142,17 +163,17 @@ const Reviews = () => {
         </div>
       </section>
       
-      {/* Reviews Section */}
+      {/* Reviews Section - Card Reveal Animation */}
       <section className="py-12 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {reviews.map((review, index) => (
               <div 
                 key={review.id} 
-                className={`${isLoaded ? 'slide-in-left' : 'opacity-0'}`}
-                style={{ animationDelay: `${index * 0.1}s` }}
+                className="review-card"
+                ref={el => reviewCardsRef.current[index] = el}
               >
-                <Card className="hover:shadow-md transition-shadow">
+                <Card className="h-full hover:shadow-md transition-all duration-300 transform hover:-translate-y-1">
                   <CardContent className="pt-6">
                     <div className="flex items-start">
                       <Avatar className="h-12 w-12 border-2 border-clockify-blue">
@@ -180,12 +201,12 @@ const Reviews = () => {
         </div>
       </section>
       
-      {/* Parent Testimonials */}
-      <section className="py-12 bg-clockify-lightGray">
-        <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${isLoaded ? 'scale-in' : 'opacity-0'}`} style={{ animationDelay: '1s' }}>
+      {/* Parent Testimonials - Rotation Animation */}
+      <section className="py-12 bg-clockify-lightGray relative overflow-hidden">
+        <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${isLoaded ? 'animate-rotate-in' : 'opacity-0'}`}>
           <h2 className="text-2xl font-bold mb-8 text-center">From Parents</h2>
           <div className="grid md:grid-cols-2 gap-6">
-            <Card className="hover:shadow-md transition-shadow bounce">
+            <Card className="hover:shadow-md transition-all duration-500 transform hover:scale-[1.02]">
               <CardContent className="pt-6">
                 <p className="italic text-gray-700">
                   "As a parent, I was looking for ways to help my daughter manage her time better without constantly nagging her. Clockify has been that solution. She's more independent and responsible now, and our relationship has improved without the constant stress over homework and deadlines."
@@ -202,7 +223,7 @@ const Reviews = () => {
               </CardContent>
             </Card>
             
-            <Card className="hover:shadow-md transition-shadow bounce" style={{ animationDelay: '0.2s' }}>
+            <Card className="hover:shadow-md transition-all duration-500 transform hover:scale-[1.02]" style={{ animationDelay: '0.2s' }}>
               <CardContent className="pt-6">
                 <p className="italic text-gray-700">
                   "My son has always struggled with organization, especially since starting high school. The structured schedules from Clockify have given him a framework that works. His grades have improved, and he even has more free time because he's working more efficiently."
