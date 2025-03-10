@@ -65,6 +65,7 @@
 
 .animate-flip-in {
   animation: flipIn 0.7s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+  opacity: 1 !important;
 }
 
 .animate-wave-in {
@@ -514,7 +515,7 @@ a:hover {
 
 /* Fix for transitions between pages to avoid blank state */
 .route-transition {
-  animation: routeFadeIn 0.3s ease-out;
+  animation: routeFadeIn 0.2s ease-out;
 }
 
 @keyframes routeFadeIn {
@@ -523,6 +524,99 @@ a:hover {
   }
   to {
     opacity: 1;
+  }
+}
+
+/* Additional animations for differentiation between pages */
+@keyframes springBounce {
+  0% { transform: scale(0.8); opacity: 0; }
+  40% { transform: scale(1.1); }
+  70% { transform: scale(0.95); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes fadeInUpStaggered {
+  0% { transform: translateY(30px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes glideIn {
+  0% { transform: translateX(-50px); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes popIn {
+  0% { transform: scale(0); opacity: 0; }
+  70% { transform: scale(1.1); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.animate-spring-bounce {
+  animation: springBounce 0.8s forwards;
+}
+
+.animate-fade-up-staggered {
+  animation: fadeInUpStaggered 0.5s forwards;
+}
+
+.animate-glide-in {
+  animation: glideIn 0.6s forwards;
+}
+
+.animate-pop-in {
+  animation: popIn 0.5s forwards;
+}
+
+/* Fix for z-indexing issues */
+.relative-z-0 {
+  position: relative;
+  z-index: 0;
+}
+
+.relative-z-10 {
+  position: relative;
+  z-index: 10;
+}
+
+.relative-z-20 {
+  position: relative;
+  z-index: 20;
+}
+
+/* Ensuring proper wave/curve overlap */
+.wave-separator {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  z-index: 1;
+}
+
+.wave-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  z-index: 1;
+}
+
+/* Smooth page transitions */
+.page-transition-container {
+  animation: smoothPageTransition 0.3s ease-out;
+}
+
+@keyframes smoothPageTransition {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
@@ -659,14 +753,16 @@ a:hover {
 }
 
 /* Fix any overlap issues in headers */
-.header-container {
+.header-container, section {
   position: relative;
-  z-index: 20;
 }
 
-.content-container {
-  position: relative;
+section:not(:first-child) {
   z-index: 10;
+}
+
+section:first-child {
+  z-index: 0;
 }
 
 /* Ensure proper stacking of elements */

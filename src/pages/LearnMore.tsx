@@ -43,8 +43,8 @@ const LearnMore = () => {
     <div className="min-h-screen flex flex-col">
       <Navbar />
       
-      {/* Hero Section - Gradient Text Animation */}
-      <section className="bg-gradient-to-r from-clockify-blue to-clockify-darkBlue py-16 md:py-24 relative overflow-hidden">
+      {/* Hero Section - Gradient Text Animation with proper z-index */}
+      <section className="bg-gradient-to-r from-clockify-blue to-clockify-darkBlue py-16 md:py-24 relative overflow-hidden z-0">
         <div className="absolute inset-0 bg-pattern opacity-10"></div>
         <div className="absolute bottom-0 left-0 w-full overflow-hidden">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" className="w-full h-16 text-white fill-current">
@@ -58,10 +58,19 @@ const LearnMore = () => {
           <p className="text-xl mb-8 max-w-3xl mx-auto animate-fade-up" style={{ animationDelay: '0.3s' }}>
             Discover how effective time management can transform your productivity, reduce stress, and help you achieve your goals.
           </p>
+          <div className="animate-elastic-bounce" style={{ animationDelay: '0.6s' }}>
+            <Button 
+              size="lg" 
+              className="bg-white text-clockify-blue hover:bg-white/90 transition-all transform hover:scale-105"
+              onClick={() => window.scrollTo({top: window.innerHeight, behavior: 'smooth'})}
+            >
+              Explore More
+            </Button>
+          </div>
         </div>
       </section>
       
-      {/* Main Content - 3D Rotation Animation */}
+      {/* Main Content - 3D Rotation Animation with proper z-index */}
       <section className="py-16 bg-white relative z-10">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="space-y-12">
